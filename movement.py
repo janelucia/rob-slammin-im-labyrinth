@@ -35,28 +35,37 @@ def spin():
     logAndSay("You spin my head right round right round")
     robot.turn(360)
 
-def driveForward(distance: int):
+def driveForward(distance: int, isCheck: bool = True):
     robot.settings
     robot.straight(distance)
+    wait(1000)
+    if isCheck:
+        checkAlignment()
 
 def allignForwards():
+    print("Allign Forwards")
     robot.stop()
     
-    run_in_thread(motor_right.run_until_stalled, 100, Stop.BRAKE, 35)
-    run_in_thread(motor_left.run_until_stalled, 100, Stop.BRAKE, 35)
+    run_in_thread(motor_right.run_until_stalled, 100, Stop.BRAKE, 23)
+    run_in_thread(motor_left.run_until_stalled, 100, Stop.BRAKE, 23)
     wait(1000)
     while(motor_right.speed() > 0 or motor_left.speed() > 0):
-        print("still driving", motor_left.speed(), motor_right.speed())
+        pass
+    wait(1000)
+    driveForward(-40, False)
 
 
 def allignBackwards():
+    print("Allign Backwards")
     robot.stop()
     
-    run_in_thread(motor_right.run_until_stalled, -100, Stop.BRAKE, 35)
-    run_in_thread(motor_left.run_until_stalled, -100, Stop.BRAKE, 35)
+    run_in_thread(motor_right.run_until_stalled, -100, Stop.BRAKE, 23)
+    run_in_thread(motor_left.run_until_stalled, -100, Stop.BRAKE, 23)
     wait(1000)
     while(motor_right.speed() < 0 or motor_left.speed() < 0):
-        print("still driving", motor_left.speed(), motor_right.speed())
+        pass
+    wait(1000)
+    driveForward(40, False)
 
 
 def allignNeck(isRight: bool = True):
@@ -68,7 +77,7 @@ def allignNeck(isRight: bool = True):
     motor_neck.reset_angle(0)
 
 
-def scan() -> tuple[int, int, int, Color]:
+def scan() -> dict[str, int | Color]:
 
     color = getColor()
 
@@ -85,5 +94,28 @@ def scan() -> tuple[int, int, int, Color]:
     allignNeck(False)
     l_distance = getDistance()
 
+    return {"distance_r": r_distance, "distance_m": m_distance, "distance_l": l_distance, "color": color}
 
-    return [r_distance, m_distance, l_distance, color]
+def checkAlignment():
+    scanResult = scan()
+    print("Checking Alignment")
+
+    if scanResult.get("distance_m") < 140: 
+        allignForwards()
+        wait(2000)
+    if scanResult.get("distance_r") < 140:
+        turnRight()
+        wait(1000)
+        allignForwards()
+        wait(1000)
+        turnLeft()
+    elif scanResult.get("distance_l") < 140:
+        turnLeft()
+        wait(1000)
+        allignForwards()
+        wait(1000)
+        turnRight()
+        
+
+
+
