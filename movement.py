@@ -62,9 +62,9 @@ def allignBackwards():
 def allignNeck(isRight: bool = True):
     motor_neck.reset_angle(0)
     if isRight:
-        motor_neck.run_until_stalled(-100, Stop.COAST, 40)
+        motor_neck.run_until_stalled(-200, Stop.COAST, 40)
     else:
-        motor_neck.run_until_stalled(100, Stop.COAST, 40)
+        motor_neck.run_until_stalled(200, Stop.COAST, 40)
     motor_neck.reset_angle(0)
 
 
@@ -77,7 +77,7 @@ def scan() -> tuple[int, int, int, Color]:
     r_distance = getDistance()
     wait(500)
     # Turn left (to middle) and scan
-    motor_neck.run_angle(100, 120)
+    motor_neck.run_angle(200, 105)
     wait(500)
     m_distance = getDistance()
     wait(500)
