@@ -2,8 +2,8 @@ from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
                                  InfraredSensor, UltrasonicSensor, GyroSensor)
 from pybricks.parameters import Port, Stop, Direction, Button, Color
 
-colorSensor = ColorSensor(Port.S2)
-distanceSensor = UltrasonicSensor(Port.S1)
+colorSensor = ColorSensor(Port.S3)
+distanceSensor = UltrasonicSensor(Port.S2)
 
 
 def getDistance() -> int:
