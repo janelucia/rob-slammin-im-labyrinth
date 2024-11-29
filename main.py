@@ -7,7 +7,7 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 
-from movement import allignBackwards, allignForwards, allignNeck, driveForward, scan, spin, turnLeft, turnRight
+from movement import allignNeck, driveAccordingToList, driveForward, scan, spin, turnLeft, turnRight
 from cfg import ev3
 
 
@@ -29,40 +29,32 @@ allignNeck()
 #spin()
 
 
+basic_driving_instruction_list = [
+    "drive_forward", 
+    "turn_around", 
+    "turn_right", 
+    "turn_left"
+]
+
 def driveToRed():
 
-    driveForward(300)
-    wait(1000)
-    turnLeft()
-    wait(1000)
+    driving_instruction_list = [
+        "drive_forward",
+        "turn_left",
+        "drive_forward",
+        "turn_right",
+        "drive_forward",
+        "turn_left",
+        "drive_forward",
+        "turn_right",
+        "drive_forward",
+        "turn_right",
+        "drive_forward",
+        "turn_around",
+        "drive_forward"
+    ]
 
-    driveForward(300)
-    wait(2000)
-    print(scan())
-    turnRight()
-    wait(2000)
-
-    driveForward(300)
-    wait(2000)
-    print(scan())
-    turnLeft()
-    wait(2000)
-
-    driveForward(300)
-    wait(2000)
-    print(scan())
-    wait(2000)
-    turnRight()
-    wait(2000)
-
-    driveForward(300)
-    wait(2000)
-    turnRight()
-    wait(2000)
-
-    driveForward(300)
-    wait(2000)
-    print(scan())
+    driveAccordingToList(driving_instruction_list)
 
 
 ev3.speaker.beep()
@@ -74,8 +66,6 @@ driveToRed()
 ev3.speaker.beep()
 
 exit()
-
-allignForwards()
  
 
 exit()
