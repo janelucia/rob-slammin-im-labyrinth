@@ -14,6 +14,7 @@ ev3.speaker.set_speech_options("en")
 # Write your program here.
 # ev3.speaker.beep()
 
+STANDARD_DRIVE_DISTANCE = 300
 
 
 
